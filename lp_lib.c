@@ -5954,7 +5954,8 @@ MYBOOL __WINAPI is_feasible(lprec *lp, REAL *values, REAL threshold)
     dist = lp->orig_rhs[i] - this_rhs[i];
     my_roundzero(dist, threshold);
     if((lp->orig_upbo[i] == 0 && dist != 0) ||( dist < 0)) {
-      FREE(this_rhs);
+      mempool_releaseVector(lp->workarrays, (char *) this_rhs, FALSE);
+    /*  FREE(this_rhs); */
       return(FALSE);
     }
   }
@@ -7645,7 +7646,7 @@ STATIC MYBOOL is_sc_violated(lprec *lp, int column)
 {
   int  varno;
   REAL tmpreal;
-  REAL eps = lp->epsvalue;                                    /* ÃŸ adding eps here*/
+  REAL eps = lp->epsvalue;                                    /* ß adding eps here*/
 
   varno = lp->rows+column;
   tmpreal = unscaled_value(lp, lp->sc_lobound[column], varno);
