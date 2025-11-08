@@ -5938,6 +5938,8 @@ MYBOOL __WINAPI is_feasible(lprec *lp, REAL *values, REAL threshold)
   }
 
   this_rhs = (REAL *) mempool_obtainVector(lp->workarrays, lp->rows+1, sizeof(*this_rhs));
+  MEMCLEAR(this_rhs, lp->rows+1);
+
 /*  allocREAL(lp, &this_rhs, lp->rows + 1, TRUE); */
   for(j = 1; j <= lp->columns; j++) {
     elmnr = mat->col_end[j - 1];
@@ -7643,7 +7645,7 @@ STATIC MYBOOL is_sc_violated(lprec *lp, int column)
 {
   int  varno;
   REAL tmpreal;
-  REAL eps = lp->epsvalue;                                    /* ß adding eps here*/
+  REAL eps = lp->epsvalue;                                    /* ÃŸ adding eps here*/
 
   varno = lp->rows+column;
   tmpreal = unscaled_value(lp, lp->sc_lobound[column], varno);
