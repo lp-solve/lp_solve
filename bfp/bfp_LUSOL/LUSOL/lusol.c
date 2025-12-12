@@ -63,6 +63,10 @@ void *clean_realloc(void *oldptr, int width, int newsize, int oldsize)
 {
   newsize *= width;
   oldsize *= width;
+  if (newsize == 0) {
+     if (oldptr != NULL) LUSOL_FREE(oldptr)
+     return NULL
+  }
   oldptr = LUSOL_REALLOC(oldptr, newsize);
   if(newsize > oldsize)
 /*    MEMCLEAR(oldptr+oldsize, newsize-oldsize); */
