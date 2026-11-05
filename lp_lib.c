@@ -8801,6 +8801,11 @@ STATIC MYBOOL bb_better(lprec *lp, int target, int mode)
                        return( FALSE );
   }
 
+  /* A relative gap is in objective units from here on; bb_breakOF stays infinite
+     until set, and an infinite gap would end the search at the first incumbent */
+  if(relgap && !is_infinite(lp, refvalue))
+    epsvalue *= 1 + fabs(refvalue);
+
   /* Adjust the test value for the desired acceptability window */
   if(delta) {
     SETMAX(epsvalue, lp->bb_deltaOF - epsvalue);
